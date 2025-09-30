@@ -2,7 +2,7 @@
   "master": {
     "tasks": [
       {
-        "id": "1",
+        "id": 1,
         "title": "Scaffold Initial Repository Structure and Documentation",
         "description": "Create the foundational directory structure and initial placeholder files for the shared-display project, including documentation, CI/CD workflows, and client/server folders.",
         "details": "Create the following directory and file structure at the root of the 'shared-display' project. \n\n**1. Create Directories:**\n- `docs/product`\n- `docs/design/decisions`\n- `proto`\n- `server`\n- `clients/android`\n- `clients/ios`\n- `.github/workflows`\n\n**2. Create Files with Placeholder Content:**\n\n- **`README.md`**:\n```markdown\n# Shared Display\n\nThis project enables real-time screen sharing and interaction across multiple devices.\n```\n\n- **`docs/product/01-problem-framing.md`**:\n```markdown\n# Problem Framing\n\n## 1. Problem Statement\n\n(Describe the core problem this project aims to solve.)\n\n## 2. Background & Context\n\n(Provide context on why this problem is important to solve now.)\n\n## 3. Target Users\n\n(Who are we building this for?)\n\n## 4. Goals & Non-Goals\n\n(What is in scope and what is explicitly out of scope?)\n```\n\n- **`docs/product/02-outcomes.md`**:\n```markdown\n# Desired Outcomes & Key Results\n\n## Objective 1: ...\n\n- **Key Result 1.1:** ...\n- **Key Result 1.2:** ...\n\n## Objective 2: ...\n\n- **Key Result 2.1:** ...\n```\n\n- **`docs/design/decisions/ADR-0001-control-vs-data.md`**:\n```markdown\n# ADR-0001: Separate Control and Data Channels\n\n- **Status:** Proposed\n- **Date:** (YYYY-MM-DD)\n\n## Context and Problem Statement\n\nWe need to decide on the communication architecture between the sharing client (server) and the viewing clients. Should control messages (e.g., start/stop, quality change) and the actual screen data (video stream) use the same communication channel or separate ones?\n\n## Decision Drivers\n\n- Performance and latency for the video stream.\n- Reliability of control messages.\n- Scalability of the architecture.\n\n## Considered Options\n\n1.  Single channel for both control and data.\n2.  Separate channels for control (e.g., WebSockets) and data (e.g., WebRTC).\n\n## Decision Outcome\n\nChosen option: [TBD], because [TBD].\n\n## Consequences\n\n- **Positive:** ...\n- **Negative:** ...\n```\n\n- **`.github/workflows/ci.yml`**:\n```yaml\nname: CI\n\non:\n  push:\n    branches: [ main ]\n  pull_request:\n    branches: [ main ]\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n\n    steps:\n      - uses: actions/checkout@v3\n\n      - name: Run a one-line script\n        run: echo \"CI pipeline placeholder. Add build, test, and lint steps here.\"\n```",
@@ -14,7 +14,7 @@
         "updatedAt": "2025-09-29T20:30:50.873Z"
       },
       {
-        "id": "2",
+        "id": 2,
         "title": "Populate Problem Framing Document",
         "description": "Update the `docs/product/01-problem-framing.md` file with the approved one-page problem statement and standard product documentation headings.",
         "details": "Navigate to the `docs/product/` directory and open the file `01-problem-framing.md`. Replace the existing placeholder content with the following verbatim markdown content:\n\n```markdown\n# Problem Framing: Shared Display\n\n## 1. Problem\n\nCollaborative environments, both remote and in-person, suffer from inefficient and disjointed screen sharing. Presenting content from one device to a larger audience or sharing interactive sessions across multiple individual devices is often cumbersome, requiring specific cables, adapters, or proprietary software that lacks cross-platform compatibility. This friction disrupts the flow of meetings, workshops, and educational sessions, hindering effective communication and real-time collaboration.\n\n## 2. Why It Matters\n\nSeamless information sharing is critical for productivity and engagement. In business, delays and technical glitches during presentations can derail important discussions and decisions. In education, the inability to easily share and interact with content limits student participation and learning effectiveness. A frictionless sharing solution would empower users to focus on the content and collaboration, not the technology.\n\n## 3. Target Audience\n\n*   **Corporate Teams:** Professionals in meetings, brainstorming sessions, and presentations who need to quickly share their screen with a room display or with remote colleagues.\n*   **Educators and Trainers:** Teachers and instructors who need to share lesson materials, conduct live demonstrations, and allow students to interact with content from their own devices.\n*   **Event Organizers:** Presenters at conferences and meetups who require a reliable way to connect their device to a projector or large screen without compatibility issues.\n\n## 4. Proposed Solution\n\nA cross-platform application, \"Shared Display,\" that enables real-time, low-latency screen sharing from any device (Android, iOS, Windows, macOS) to any other device or group of devices. The solution will prioritize a simple, QR-code-based connection process, eliminating the need for cables or complex network configurations. It will also support interactive features, allowing viewers to not only see the shared screen but also potentially interact with it (e.g., annotations, remote control), subject to the presenter's permission.\n\n## 5. Success Metrics\n\n*   **Connection Time:** Average time to initiate a sharing session is under 5 seconds.\n*   **Adoption Rate:** A 20% month-over-month increase in active users for the first six months.\n*   **Session Reliability:** 99.5% of sharing sessions are completed without unintentional disconnection.\n*   **User Satisfaction:** Achieve a Net Promoter Score (NPS) of 50+ within the first year.\n```",
@@ -28,7 +28,7 @@
         "updatedAt": "2025-09-29T20:35:50.292Z"
       },
       {
-        "id": "3",
+        "id": 3,
         "title": "Expand README.md with Project Details",
         "description": "Update the root README.md file to include a comprehensive project overview, architectural summary, documentation links, roadmap, and development prerequisites.",
         "details": "Overwrite the contents of the root `README.md` file with the detailed information below. This new content provides essential context for new contributors and stakeholders, referencing the project's goals, architecture, and development setup based on the initial scaffolding and problem framing.\n\n**New `README.md` Content:**\n\n```markdown\n# Shared Display\n\nShared Display is a real-time screen sharing and interaction service designed for modern collaborative environments. It allows a user to present content from a primary device to one or more secondary displays, facilitating seamless information sharing in both remote and in-person settings.\n\n## Overview\n\nTraditional screen sharing solutions are often cumbersome, requiring specific hardware, complex setup, or suffering from high latency. This project aims to solve that by creating a simple, low-latency, and cross-platform solution. The core use case involves a \"host\" broadcasting their screen to multiple \"client\" devices, which can be anything from a conference room TV to individual participant laptops or tablets.\n\nFor a detailed breakdown of the problem space, user personas, and goals, see the [Problem Framing Document](./docs/product/01-problem-framing.md).\n\n## Architecture: Control vs. Data Plane\n\nTo ensure performance and scalability, the system is split into two logical planes:\n\n-   **Control Plane:** A gRPC-based service responsible for session management. This includes creating new sharing sessions, handling client joins/leaves, managing permissions, and negotiating connection details. All session lifecycle events are handled here.\n-   **Data Plane:** A high-throughput, low-latency media stream that carries the actual screen content. This will likely be implemented using WebRTC or a direct RTP stream, optimized for real-time video delivery.\n\nThe protocol definitions (`.proto` files) that govern the control plane can be found in the `/proto` directory.\n\n## Documentation\n\nAll project documentation is located in the `/docs` directory. It is organized into two main categories:\n\n-   `/docs/product`: Contains product management documents, including problem framing, requirements, and user stories.\n-   `/docs/design`: Contains technical design documents, architecture decision records (ADRs), and system diagrams.\n\n## Roadmap\n\nThis is a high-level overview of the planned development phases.\n\n-   [ ] **Phase 1: Core Service (MVP)**\n    -   [ ] Implement gRPC server for session control.\n    -   [ ] Develop basic Android client for screen capture and broadcast.\n    -   [ ] Develop a simple display client (e.g., web or desktop) to receive and display the stream.\n    -   [ ] Establish a basic WebRTC data plane for media streaming.\n\n-   [ ] **Phase 2: Enhanced Interaction**\n    -   [ ] Add iOS client support.\n    -   [ ] Implement host-side controls (e.g., pause, stop, kick participant).\n    -   [ ] Introduce basic annotation/drawing capabilities.\n\n-   [ ] **Phase 3: Security & Scalability**\n    -   [ ] Implement authentication and authorization (e.g., session PINs).\n    -   [ ] Introduce end-to-end encryption for the data plane.\n    -   [ ] Load testing and performance optimization.\n\n## Development Prerequisites\n\nTo build and run this project, you will need the following tools installed:\n\n-   **Go:** For the main `server` application.\n-   **Protobuf Compiler (`protoc`):** For generating gRPC code from `.proto` files.\n-   **Docker:** For containerization and simplified dependency management.\n-   **Android Studio:** For developing the `clients/android` application.\n-   **Xcode:** For developing the `clients/ios` application (macOS required).\n```",
@@ -43,7 +43,7 @@
         "updatedAt": "2025-09-29T20:55:20.033Z"
       },
       {
-        "id": "4",
+        "id": 4,
         "title": "Create Initial CI Workflow for Linting",
         "description": "Create a new GitHub Actions workflow file at .github/workflows/ci.yml that includes a placeholder lint job running on a Windows environment to validate the repository structure.",
         "details": "Create a new file named `ci.yml` inside the `.github/workflows/` directory. This workflow will serve as the initial continuous integration pipeline. It will contain a single job named `lint` that checks out the code and lists the repository's file structure to ensure the CI environment is set up correctly.\n\n**File Path:** `.github/workflows/ci.yml`\n\n**File Content:**\n```yaml\nname: CI\n\non:\n  push:\n    branches:\n      - main\n  pull_request:\n    branches:\n      - main\n\njobs:\n  lint:\n    name: Lint\n    runs-on: windows-latest\n\n    steps:\n      - name: Checkout repository\n        uses: actions/checkout@v4\n\n      - name: List repository structure\n        run: |\n          echo \"Repository Structure:\"\n          dir /s /b\n```",
@@ -57,7 +57,7 @@
         "updatedAt": "2025-09-29T20:57:54.059Z"
       },
       {
-        "id": "5",
+        "id": 5,
         "title": "Initialize Git Repository and Create First Commit",
         "description": "Initialize a new Git repository, stage all existing project files, and create the initial commit. The task concludes by prompting the user for next steps to add a remote and push.",
         "details": "This task will turn the project directory into a Git repository and create the first commit containing all the files scaffolded in previous tasks. It will not push to a remote repository automatically but will guide the user on how to do so.\n\nExecute the following commands in the root of the 'shared-display' project:\n\n1. **Initialize the repository:**\n   ```bash\n   git init\n   ```\n\n2. **Stage all created files and directories:**\n   ```bash\n   git add .\n   ```\n\n3. **Create the initial commit with the specified message:**\n   ```bash\n   git commit -m \"chore(repo): scaffold Step 1 and CI placeholder\"\n   ```\n\n4. **Prompt the user with instructions for adding a remote and pushing:**\n   Display the following message to the user's console:\n   ```text\n   Git repository initialized and initial commit created successfully.\n\n   Next Steps:\n   1. Go to your Git provider (e.g., GitHub, GitLab) and create a new, empty repository.\n   2. Copy the repository's URL (e.g., https://github.com/user/repo.git).\n   3. Add the remote to your local repository by running:\n      git remote add origin <YOUR_REPOSITORY_URL>\n   4. Push your initial commit by running:\n      git push -u origin main\n   ```",
@@ -71,6 +71,74 @@
         ],
         "priority": "high",
         "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Define Initial gRPC Service with Protocol Buffers",
+        "description": "Create the initial `display.proto` file defining the core gRPC service for screen sharing, including messages for stream data and connection management.",
+        "details": "Create a new file named `display.proto` inside the `proto/` directory. This file will establish the foundational contract for communication between the server and clients using Protocol Buffers and gRPC. Populate the file with the following content:\n\n**File Path:** `proto/display.proto`\n\n**File Content:**\n```proto\nsyntax = \"proto3\";\n\npackage shared_display;\n\noption go_package = \"github.com/your-org/shared-display/gen/go;display_v1\";\noption java_package = \"com.example.shareddisplay.proto\";\noption java_multiple_files = true;\n\n// DisplayService handles the real-time streaming of display data.\nservice DisplayService {\n  // StreamDisplay is a bi-directional stream for a presenter to send screen frames\n  // and receive control messages.\n  rpc StreamDisplay(stream StreamRequest) returns (stream StreamResponse);\n}\n\n// StreamRequest is a wrapper message sent from the client to the server.\nmessage StreamRequest {\n  oneof request {\n    ConnectRequest connect_request = 1;\n    FrameData frame_data = 2;\n  }\n}\n\n// StreamResponse is a wrapper message sent from the server to the client.\nmessage StreamResponse {\n  oneof response {\n    ConnectResponse connect_response = 1;\n    ControlMessage control_message = 2;\n  }\n}\n\n// ConnectRequest is the first message sent by a client to establish a stream.\nmessage ConnectRequest {\n  // A unique identifier for the presenter's device.\n  string presenter_id = 1;\n  // Optional metadata about the screen (e.g., resolution).\n  ScreenMetadata metadata = 2;\n}\n\nmessage ScreenMetadata {\n  int32 width = 1;\n  int32 height = 2;\n}\n\n// FrameData contains a chunk of the screen data, typically a compressed image frame.\nmessage FrameData {\n  // The raw bytes of the image frame (e.g., JPEG, PNG).\n  bytes frame_chunk = 1;\n}\n\n// ConnectResponse is the server's response to a successful ConnectRequest.\nmessage ConnectResponse {\n  // A unique ID for this streaming session.\n  string session_id = 1;\n  // A unique ID for this specific connection.\n  string connection_id = 2;\n}\n\n// ControlMessage is sent from the server to the client to manage the stream.\nmessage ControlMessage {\n  enum Command {\n    COMMAND_UNSPECIFIED = 0;\n    // Instructs the client to pause sending frames.\n    PAUSE_STREAM = 1;\n    // Instructs the client to resume sending frames.\n    RESUME_STREAM = 2;\n    // Instructs the client to terminate the stream.\n    END_STREAM = 3;\n  }\n  Command command = 1;\n}\n```",
+        "testStrategy": "1. After the task is completed, pull the latest changes from the repository.\n2. Verify that the file `proto/display.proto` has been created in the correct directory.\n3. Open the file and confirm its content exactly matches the Protobuf definition specified in the implementation details.\n4. (Optional) If you have the `protoc` compiler installed, run a lint or compile command from the project root to validate the syntax, for example: `protoc --go_out=. --proto_path=proto proto/display.proto`. The command may vary depending on the chosen language and plugins, but it should complete without syntax errors.",
+        "status": "pending",
+        "dependencies": [
+          5
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create display.proto and Define File Header",
+            "description": "Create the `proto/display.proto` file and add the initial syntax, package, and language-specific options that form the file's header.",
+            "dependencies": [],
+            "details": "Based on the codebase analysis, the `proto` directory exists but contains no files. Create a new file named `display.proto` inside the `proto/` directory. Populate it with the `syntax`, `package`, and `option` directives as specified in the task description.",
+            "status": "pending",
+            "testStrategy": "Verify that the file `proto/display.proto` is created. Check that its content starts with the `syntax`, `package`, and `option` lines."
+          },
+          {
+            "id": 2,
+            "title": "Add Connection Handshake Message Definitions",
+            "description": "Append the message definitions for `ConnectRequest`, `ScreenMetadata`, and `ConnectResponse` to `proto/display.proto`. These messages are essential for handling the initial stream setup and handshake.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Edit the `proto/display.proto` file and add the Protobuf message definitions for `ConnectRequest`, `ScreenMetadata`, and `ConnectResponse`. These should be placed after the file header options.",
+            "status": "pending",
+            "testStrategy": "Open `proto/display.proto` and confirm that the `ConnectRequest`, `ScreenMetadata`, and `ConnectResponse` message blocks have been added correctly after the header."
+          },
+          {
+            "id": 3,
+            "title": "Add Stream Data and Control Message Definitions",
+            "description": "Append the message definitions for `FrameData` and `ControlMessage` to `proto/display.proto`. These messages are used for transmitting screen data and managing the stream flow after connection.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Edit the `proto/display.proto` file to include the `FrameData` message for carrying screen image bytes and the `ControlMessage` with its `Command` enum for stream lifecycle management.",
+            "status": "pending",
+            "testStrategy": "Inspect `proto/display.proto` to ensure the `FrameData` message and the `ControlMessage` (including its nested `Command` enum) are present and correctly defined."
+          },
+          {
+            "id": 4,
+            "title": "Define Top-Level Stream Wrapper Messages",
+            "description": "Append the `StreamRequest` and `StreamResponse` wrapper messages to `proto/display.proto`. These messages use `oneof` to encapsulate the different message types for the bi-directional stream.",
+            "dependencies": [
+              "6.2",
+              "6.3"
+            ],
+            "details": "Edit `proto/display.proto` and add the `StreamRequest` and `StreamResponse` messages. These will act as containers, using `oneof` to wrap the messages defined in the previous subtasks (`ConnectRequest`, `FrameData`, `ConnectResponse`, `ControlMessage`).",
+            "status": "pending",
+            "testStrategy": "Verify that `proto/display.proto` now contains the `StreamRequest` and `StreamResponse` messages, and that their `oneof` fields correctly reference the previously defined message types."
+          },
+          {
+            "id": 5,
+            "title": "Define the DisplayService gRPC Service",
+            "description": "Append the `DisplayService` definition to `proto/display.proto`, including the bi-directional `StreamDisplay` RPC method. This completes the service contract.",
+            "dependencies": [
+              "6.4"
+            ],
+            "details": "Complete the `proto/display.proto` file by adding the final `service DisplayService` block. This service definition will contain the `StreamDisplay` RPC, which uses the `StreamRequest` and `StreamResponse` wrapper messages to establish the bi-directional stream.",
+            "status": "pending",
+            "testStrategy": "Open the final `proto/display.proto` file and confirm its content exactly matches the full specification from the task description, paying close attention to the `DisplayService` and `StreamDisplay` rpc definition."
+          }
+        ]
       }
     ],
     "metadata": {
@@ -80,7 +148,10 @@
       "completedCount": 4,
       "tags": [
         "master"
-      ]
+      ],
+      "created": "2025-09-30T11:35:38.285Z",
+      "description": "Tasks for master context",
+      "updated": "2025-09-30T11:36:15.090Z"
     }
   }
 }
